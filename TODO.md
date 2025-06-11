@@ -1,0 +1,6 @@
+- Implement river crossing game environment
+- Write solvers for the river crossing game
+- Find optimal strategies for different n and k
+- Investigate/verify for which n and k there are no solutions
+- Provide unit tests for all components
+- Add visualizations
