@@ -31,3 +31,11 @@ You can search for solutions up to a given `n` via:
 ```bash
 python -m river_crossing.analysis 10 -k 4
 ```
+
+To generate a CSV table of solutions in the format required by the paper
+prompts, you can run:
+
+```bash
+python -m river_crossing.analysis 10 -k 4 --table solutions.csv
+```
+
