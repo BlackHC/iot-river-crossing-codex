@@ -2,6 +2,7 @@
 
 from .solver import solve
 from .visualize import format_moves, format_moves_paper
+from .strategy import strategy_k4, verify_moves
 import time
 
 
@@ -41,6 +42,23 @@ def write_table(path: str, n_min: int = 2, n_max: int = 10, k_min: int = 2, k_ma
                     ])
 
 
+def write_k4_strategy_table(path: str, n_min: int = 6, n_max: int = 60):
+    """Generate a CSV table using the specialized k=4 strategy."""
+
+    import csv, time
+
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["n", "steps", "moves"])
+        for n in range(n_min, n_max + 1):
+            start = time.time()
+            moves = strategy_k4(n)
+            ok = verify_moves(n, moves)
+            runtime = time.time() - start
+            steps = len(moves) if ok else None
+            writer.writerow([n, steps, format_moves_paper(moves)])
+
+
 def main():
     import argparse
 
@@ -48,9 +66,12 @@ def main():
     parser.add_argument("max_n", type=int, nargs="?", default=3, help="maximum number of pairs")
     parser.add_argument("-k", type=int, default=2, help="boat capacity")
     parser.add_argument("--table", type=str, help="write CSV table to path")
+    parser.add_argument("--k4table", type=str, help="write k=4 strategy CSV")
     args = parser.parse_args()
 
-    if args.table:
+    if args.k4table:
+        write_k4_strategy_table(args.k4table, 6, args.max_n)
+    elif args.table:
         write_table(args.table, 2, args.max_n, 2, args.k)
     else:
         for n, (moves, runtime) in find_solutions(args.max_n, args.k).items():

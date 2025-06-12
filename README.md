@@ -26,6 +26,14 @@ exponentially with the number of pairs `n`. Practical experiments show that
 boat capacity `k=4` still allows solutions to be found for `n=10` within half a
 minute on typical hardware.
 
+For `k=4` and `n \ge 6` a closed-form shuttle strategy is implemented in
+`river_crossing.strategy`. It produces solutions of length `2n-3` without
+search. You can export a CSV of these moves for larger `n` via:
+
+```bash
+python -m river_crossing.analysis 60 --k4table solution_k4.csv
+```
+
 You can search for solutions up to a given `n` via:
 
 ```bash
